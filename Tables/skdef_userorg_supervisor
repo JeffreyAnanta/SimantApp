@@ -1,7 +1,3 @@
--- Table: public.skdef_userorg_supervisor
-
--- DROP TABLE public.skdef_userorg_supervisor;
-
 CREATE TABLE IF NOT EXISTS public.skdef_userorg_supervisor
 (
     skdef_userorg_supervisor_id character varying(32) COLLATE pg_catalog."default" NOT NULL,
@@ -37,9 +33,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.skdef_userorg_supervisor
     OWNER to tad;
--- Index: skdef_uospv_idx_usr
 
--- DROP INDEX public.skdef_uospv_idx_usr;
 
 CREATE INDEX skdef_uospv_idx_usr
     ON public.skdef_userorg_supervisor USING btree
