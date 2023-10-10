@@ -1,0 +1,48 @@
+-- Table: public.skdef_userorg_rmanager
+
+-- DROP TABLE public.skdef_userorg_rmanager;
+
+CREATE TABLE IF NOT EXISTS public.skdef_userorg_rmanager
+(
+    skdef_userorg_rmanager_id character varying(32) COLLATE pg_catalog."default" NOT NULL,
+    ad_client_id character varying(32) COLLATE pg_catalog."default" NOT NULL,
+    ad_org_id character varying(32) COLLATE pg_catalog."default" NOT NULL,
+    isactive character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Y'::bpchar,
+    created timestamp without time zone NOT NULL DEFAULT now(),
+    createdby character varying(32) COLLATE pg_catalog."default" NOT NULL,
+    updated timestamp without time zone NOT NULL DEFAULT now(),
+    updatedby character varying(32) COLLATE pg_catalog."default" NOT NULL,
+    ad_user_id character varying(32) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT skdef_uorm_pk PRIMARY KEY (skdef_userorg_rmanager_id),
+    CONSTRAINT skdef_userorg_rmanager_usr UNIQUE (ad_user_id, ad_org_id),
+    CONSTRAINT skdef_uorm_client FOREIGN KEY (ad_client_id)
+        REFERENCES public.ad_client (ad_client_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT skdef_uorm_org FOREIGN KEY (ad_org_id)
+        REFERENCES public.ad_org (ad_org_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT skdef_uorm_user FOREIGN KEY (ad_user_id)
+        REFERENCES public.ad_user (ad_user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT skdef_uorm_isactive_chk CHECK (isactive = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.skdef_userorg_rmanager
+    OWNER to tad;
+-- Index: skdef_uorm_idx_usr
+
+-- DROP INDEX public.skdef_uorm_idx_usr;
+
+CREATE INDEX skdef_uorm_idx_usr
+    ON public.skdef_userorg_rmanager USING btree
+    (ad_user_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default
+    WHERE ad_user_id IS NOT NULL;
