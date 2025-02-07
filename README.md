@@ -62,3 +62,12 @@ ini cara pake sales order, bisa cara 1 dan 2
 ini cara pake pruchase order coil, bisa cara 1 dan 2
 
 ==ARTICLE_END==
+
+==ARTICLE_START==
+# Article Title: User Role
+## Article Path: 
+## Article URL: User_Role
+## Article Content: 
+Ini cara konfigurasi user role
+
+==ARTICLE_END==
